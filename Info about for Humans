@@ -1,0 +1,80 @@
+/*
+/////////////////////////////////////////////
+    -----     |      /|  ______     /----\
+      |       |     / |  |         /      \
+      |       |    /  |  |         |      |
+      |       |   /   |  |_____    |      |
+      |       |  /    |  |         |      |
+      |       | /     |  |         \      /
+    -----     |/      |  |          \____/
+/////////////////////////////////////////////
+*/
+
+#include <iostream>
+#include "string.h"
+#include "stdint.h"
+#include "stdio.h"
+#include "stdbool.h"
+
+using namespace std;
+
+#define VALUE_HUMAN 32
+
+//////////////Option/////////////////////
+struct
+{
+    bool perm;
+    char FirstName[32];
+    char name[32];
+    int age;
+    
+} Bauka[VALUE_HUMAN];
+/////////////////////////////////////////
+
+
+void create_human(char* inp_FirstName, char* inp_name, int age)
+{
+    int end_addr = 0;
+    for(int i = 0; i < VALUE_HUMAN; i++)
+    {
+        if(Bauka[i].perm == false)
+        {
+            end_addr = i;
+            break;
+        }
+    }
+    
+    memset(&Bauka[end_addr].FirstName, 0, sizeof(Bauka[end_addr].FirstName));
+    //memcpy(&Bauka[end_addr].FirstName, &inp_FirstName, strlen(inp_FirstName));
+    strcat(Bauka[end_addr].FirstName, inp_FirstName);
+    
+    memset(Bauka[end_addr].name, 0, sizeof(Bauka[end_addr].name));
+    //memcpy(&Bauka[end_addr].name, &inp_name, strlen(inp_name));
+    strcat(Bauka[end_addr].name, inp_name);
+    
+    Bauka[end_addr].age = age;
+    Bauka[end_addr].perm = true;
+}
+
+void print_humans()
+{
+    for(int i = 0; i < VALUE_HUMAN; i++)
+    {
+        if(Bauka[i].perm == false) break;
+        
+        printf("Num:%d", i);
+        printf(" || FirstName:");
+        printf(Bauka[i].FirstName);
+        printf(" || Name:");
+        printf(Bauka[i].name);
+        printf(" || Age:%d\n", Bauka[i].age);        
+    }
+}
+
+////////////////Main///////////////////////
+int main()
+{
+   create_human("Turkbenbai", "Bauirzhan", 16);
+    
+    print_humans();
+}
