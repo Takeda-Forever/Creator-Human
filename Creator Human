@@ -15,66 +15,42 @@
 #include "stdint.h"
 #include "stdio.h"
 #include "stdbool.h"
+#include <vector>
 
 using namespace std;
 
-#define VALUE_HUMAN 32
-
 //////////////Option/////////////////////
-struct
+struct Person
 {
-    bool perm;
-    char FirstName[32];
-    char name[32];
+    std::string surname;
+    std::string name;
     int age;
-    
-} Bauka[VALUE_HUMAN];
-/////////////////////////////////////////
+};
 
+std::vector<Person> arr;
 
-void create_human(char* inp_FirstName, char* inp_name, int age)
+//////////////Function///////////////////
+void CreatePerson(std::string in_surname, std::string in_name, int age)
 {
-    int end_addr = 0;
-    for(int i = 0; i < VALUE_HUMAN; i++)
-    {
-        if(Bauka[i].perm == false)
-        {
-            end_addr = i;
-            break;
-        }
-    }
-    
-    memset(&Bauka[end_addr].FirstName, 0, sizeof(Bauka[end_addr].FirstName));
-    //memcpy(&Bauka[end_addr].FirstName, &inp_FirstName, strlen(inp_FirstName));
-    strcat(Bauka[end_addr].FirstName, inp_FirstName);
-    
-    memset(Bauka[end_addr].name, 0, sizeof(Bauka[end_addr].name));
-    //memcpy(&Bauka[end_addr].name, &inp_name, strlen(inp_name));
-    strcat(Bauka[end_addr].name, inp_name);
-    
-    Bauka[end_addr].age = age;
-    Bauka[end_addr].perm = true;
+    arr.push_back(((Person){in_surname, in_name, age}));
 }
 
-void print_humans()
+void PrintArray(std::vector<Person> &_arr)
 {
-    for(int i = 0; i < VALUE_HUMAN; i++)
+    for(int i = 0; i < _arr.size(); i++)
     {
-        if(Bauka[i].perm == false) break;
         
-        printf("Num:%d", i);
-        printf(" || FirstName:");
-        printf(Bauka[i].FirstName);
-        printf(" || Name:");
-        printf(Bauka[i].name);
-        printf(" || Age:%d\n", Bauka[i].age);        
+        std::cout << '#' << i+1 << ":\n"; 
+        std::cout << " - Surname:" << _arr[i].surname << '\n';
+        std::cout << " - Name:" << _arr[i].name << '\n';
+        std::cout << " - Age:" << _arr[i].age << "\n\n";
     }
 }
 
 ////////////////Main///////////////////////
 int main()
 {
-   create_human("Turkbenbai", "Bauirzhan", 16);
-    
-    print_humans();
+   CreatePerson("Takeda", "Forever", 16);
+   CreatePerson("Monkey", "Laptop", 12);
+   PrintArray(arr);
 }
